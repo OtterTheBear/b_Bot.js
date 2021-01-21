@@ -1,5 +1,6 @@
 var Discord = require("discord.io");
 var auth = require("./auth.json");
+var bigInt = require("big-integer");
 
 
 // Initialize Discord Bot
@@ -50,6 +51,32 @@ bot.on("message", function (user, userID, channelID, message, evt) {
                 message: the_text
                     
             });
+        } else if (cmd == "+") {
+            bot.sendMessage({
+                to: channelID,
+                message: bigInt(args[1]).add(bigInt(args[2]))
+            });
+        
+        } else if (cmd =="-") {
+            bot.sendMessage({
+                to: channelID,
+                message: bigInt(args[1]).subtract(bigInt(args[2]))
+            });
+        } else if (cmd == "*") {
+            bot.sendMessage({
+                to: channelID,
+                message: bigInt(args[1]).multiply(bigInt(args[2]))
+            })
+        } else if (cmd == "/") {
+            bot.sendMessage({
+                to: channelID,
+                message: parseInt(args[1]) / parseInt(args[2])
+            });
+        } else if (cmd == "^") {
+            bot.sendMessage({
+                to: channelID,
+                message: bigInt(args[1]).pow(bigInt(args[2]))
+            });
         } else if (cmd == "help") {
             bot.sendMessage({
                 to: channelID,
@@ -79,12 +106,26 @@ bot.on("message", function (user, userID, channelID, message, evt) {
 
                         {
                             name: "help",
-                            value: "Bring up this message",
+                            value: "Bring up this message.",
+                            inline: false
+                        },
+
+                        {
+                            name: "One of +-*/^",
+                            value: "Perform that operation on two space-separated numbers.",
                             inline: false
                         }
 
-                    ]
+                    ],
+
+                    url: "https://github.com/OtterTheBear/b_Bot.js",
+                    footer: {
+                        text: "https://github.com/OtterTheBear/b_Bot.js",
+                        icon_url: "https://github.com/OtterTheBear/b_Bot.js"
+                    }
+
                 }
+
             });
         }
      }
